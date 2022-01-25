@@ -100,6 +100,20 @@ If the code fails, feel free to open a GitHub issue about it to let the world kn
 
 If it works, feel free to open a PR as well to update this section. I may or may not reply, this is retro programming after all, just a pastime escape hatch from the real world.
 
+Test code
+---------
+
+The file `TEST.C` contains an example code that stresses the allocator. Example output:
+
+```
+Disturbing heap with 26175 preallocated bytes. (0526:0000)
+2000:0000 (linear: 0x20000): 65536 bytes (fits within 64KB page, offset=0x0)
+4000:0000 (linear: 0x40000): 65536 bytes (fits within 64KB page, offset=0x0)
+6000:0000 (linear: 0x60000): 65536 bytes (fits within 64KB page, offset=0x0)
+8000:0000 (linear: 0x80000): 65536 bytes (fits within 64KB page, offset=0x0)
+Allocation failed.
+```
+
 License
 -------
 
