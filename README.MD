@@ -82,7 +82,7 @@ Now since the allocator is left-flush first-fit, the next allocation should retu
 
 Given the loop structure in the allocator, it does not matter even if the guarantees do not hold, but the allocator will probe through all available memory pages anyways.
 
-Testing this scheme in practice, there is a small complication to take into account with a a bit of bookkeeping structure that the memory allocator internally uses, and alignment/rounding to 16byte multiples, but with small accommodations for that, the above algorithm works well in practice. So well in fact, that when testing, I am unable to observe step 4 failing when the memory is being allocated as the very first thing in a program (which is a reasonable thing to do when programming DOS Sound Blaster code).
+Testing this scheme in practice, there is a small complication to take into account with the bookkeeping structures that the memory allocator internally uses, and alignment/rounding (that seem to be to 16byte multiples), but with small accommodations for that, the above algorithm works well in practice. So well in fact, that when testing, I am unable to observe step 4 failing when the memory is being allocated as the very first thing in a program (which is a reasonable thing to do when programming DOS Sound Blaster code).
 
 Notes
 -----
