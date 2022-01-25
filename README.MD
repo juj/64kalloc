@@ -65,7 +65,7 @@ holds.
 
 Softly relying on these two assumptions, left-flush and first-fit, we can employ the following strategy:
 
-1. Allocate the requested amount (<= 64KB) of memory with `farmalloc`.
+1. Allocate the requested amount of memory with `farmalloc`.
 
 2. The returned pointer will likely straddle the 64KB page, especially if allocating >= 32KB of memory.
 
