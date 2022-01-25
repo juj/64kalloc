@@ -82,6 +82,13 @@ Now since the allocator is left-flush first-fit, the next allocation should retu
 
 Testing this scheme in practice, there is a small complication to take into account with a a bit of bookkeeping structure that the memory allocator internally uses, and alignment/rounding to 16byte multiples, but with small accommodations for that, the above algorithm works well in practice. So well in fact, that when testing, I am unable to observe step 4 failing when the memory is being allocated as the very first thing in a program.
 
+Notes
+-----
+
+- The allocator `faralloc_inside_64kb_page()` has an overallocation overhead of just 16 bytes. (this is the delta `align_payload_to_64kb(ptr) - ptr`)
+- The allocator `faralloc_inside_64kb_page()` is not restricted to allocating only 64KB of memory. You can allocate e.g. 128KB, in which case a memory pointer aligned at the start of a 64KB physical boundary will be allocated, with the size of two consecutive 64KB pages.
+- If you need to allocate two aligned pages of 2x32KB or 2x64KB each, it is more optimal to call `faralloc_inside_64kb_page()` only once with twice the size, rather than perform two individual allocations. This will result in less fragmentation of the heap.
+
 Supported compilers
 -------------------
 
