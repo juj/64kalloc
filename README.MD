@@ -13,8 +13,8 @@ Copy `64kalloc.c` and `64kalloc.h` to your project, then use it with
 
 int main()
 {
-  void *dmaMemory = faralloc_inside_64kb_page(65536);
-  void *pageAlignedMem = align_payload_to_64kb(dmaMemory);
+  void far *dmaMemory = faralloc_inside_64kb_page(65536);
+  void far *pageAlignedMem = align_payload_to_64kb(dmaMemory);
 
   // Pointer pageAlignedMem will now point to 65536 bytes aligned
   // to a 64KB page. This pointer can be passed to a DMA routine.
@@ -55,9 +55,9 @@ These two guarantees are:
 2. It looks like the Borland Turbo C/C++ allocator is either **"first-fit"**, or at least, if memory allocation is done as the first thing at program startup, when the heap is not yet fragmented, it will behave like first-fit. This means that the assumption
 
 ```c
-void *ptr1 = farmalloc(x);
+void far *ptr1 = farmalloc(x);
 farfree(ptr1);
-void *ptr2 = farmalloc(y); // where y <= x
+void far *ptr2 = farmalloc(y); // where y <= x
 assert(ptr1 == ptr2);
 ```
 
