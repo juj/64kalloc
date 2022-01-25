@@ -63,7 +63,7 @@ assert(ptr1 == ptr2);
 
 holds.
 
-With these two assumptions, left-flush and first-fit, we can employ the following strategy:
+Softly relying on these two assumptions, left-flush and first-fit, we can employ the following strategy:
 
 1. Allocate the requested amount (<= 64KB) of memory with `farmalloc`.
 
@@ -79,6 +79,8 @@ With these two assumptions, left-flush and first-fit, we can employ the followin
 Now since the allocator is left-flush first-fit, the next allocation should return a memory pointer that will start at address `BBB` that is exactly 64KB aligned. Perform the actual `farmalloc()` for the requested size. If the alignment checks out, proceed to next step 5. If something went wrong and we still did not get a suitably page-aligned memory, loop back to step 2 to repeat.
 
 5. Finally, after we have succeeded with the actual allocation, `farfree()` all the temporary memory pointers that were allocated at step 4.
+
+Given the loop structure in the allocator, it does not matter even if the guarantees do not hold, but the allocator will probe through all available memory pages anyways.
 
 Testing this scheme in practice, there is a small complication to take into account with a a bit of bookkeeping structure that the memory allocator internally uses, and alignment/rounding to 16byte multiples, but with small accommodations for that, the above algorithm works well in practice. So well in fact, that when testing, I am unable to observe step 4 failing when the memory is being allocated as the very first thing in a program.
 
